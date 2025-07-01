@@ -47,4 +47,5 @@ huggingface-cli login
 $hfToken = Read-Host "Entrez votre token Hugging Face"
 $env:HF_TOKEN = $hfToken
 
+# Exécute le script de configuration du projet
 poetry run python scripts/setup
