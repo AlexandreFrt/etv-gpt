@@ -26,7 +26,7 @@ ui:
   enabled: true
   path: /
   # "RAG", "Search", "Basic", or "Summarize"
-  default_mode: "RAG"
+  default_mode: "Basic"
   default_chat_system_prompt: >
     You are a helpful, respectful and honest assistant.
     Always answer as helpfully as possible and follow ALL given instructions.
@@ -63,7 +63,7 @@ rag:
   #This value is disabled by default.  If you enable this settings, the RAG will only use articles that meet a certain percentage score.
   rerank:
     enabled: false
-    model: cross-encoder/ms-marco-MiniLM-L-2-v2
+    model: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
     top_n: 1
 
 summarize:
@@ -88,17 +88,23 @@ embedding:
   # Should be matching the value above in most cases
   mode: huggingface
   ingest_mode: simple
-  embed_dim: 768 # 768 is for nomic-ai/nomic-embed-text-v1.5
+  embed_dim: 1024 # 1024 est pour intfloat/multilingual-e5-large-instruct
 
 huggingface:
-  embedding_hf_model_name: nomic-ai/nomic-embed-text-v1.5
+  embedding_hf_model_name: intfloat/multilingual-e5-large-instruct
   access_token: ${HF_TOKEN:}
   # Warning: Enabling this option will allow the model to download and execute code from the internet.
   # Nomic AI requires this option to be enabled to use the model, be aware if you are using a different model.
   trust_remote_code: true
 
-vectorstore:
+vectorstore: 
   database: qdrant
+
+chroma:
+  path: local_data/private_gpt/chroma
+
+qdrant:
+  path: local_data/private_gpt/qdrant
 
 nodestore:
   database: simple
@@ -107,9 +113,6 @@ milvus:
   uri: local_data/private_gpt/milvus/milvus_local.db
   collection_name: milvus_db
   overwrite: false
-
-qdrant:
-  path: local_data/private_gpt/qdrant
 
 postgres:
   host: localhost

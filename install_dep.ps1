@@ -10,12 +10,6 @@ $env:PATH="$env:USERPROFILE\.pyenv\pyenv-win\bin;$env:USERPROFILE\.pyenv\pyenv-w
 # Enregistre les variables d'environnement pour pyenv-win de manière permanente
 setx PATH "$env:USERPROFILE\.pyenv\pyenv-win\bin;$env:USERPROFILE\.pyenv-win\shims;$env:USERPROFILE\.pyenv-win\libexec;$env:PATH"
 
-# Installe Python 3.11 via pyenv
-pyenv install 3.11
-
-# Définit Python 3.11 comme version locale
-pyenv local 3.11
-
 # Télécharge et installe Poetry, un gestionnaire de dépendances pour Python
 (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
 
@@ -34,18 +28,5 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 # Installe l'outil Make via Chocolatey
 choco install make
 
-# Installe les dépendances du projet avec les extras spécifiés
-poetry install --extras "ui llms-llama-cpp embeddings-huggingface vector-stores-qdrant"
-
 # Installe l'outil de ligne de commande Hugging Face Hub
 pip install -U "huggingface_hub[cli]"
-
-# Initialise le clé huggingface pour l'API
-huggingface-cli login
-
-# Demande à l'utilisateur de saisir son token Hugging Face
-$hfToken = Read-Host "Entrez votre token Hugging Face"
-$env:HF_TOKEN = $hfToken
-
-# Exécute le script de configuration du projet
-poetry run python scripts/setup
