@@ -49,7 +49,7 @@ llm:
   mode: llamacpp
   prompt_style: "mistral" # llama3, mistral
   # Doit correspondre au modèle sélectionné
-  max_new_tokens: 512
+  max_new_tokens: 4096
   context_window: 4096
   # Sélectionnez votre tokenizer. Llama-index tokenizer est celui par défaut.
   # tokenizer: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -62,7 +62,7 @@ rag:
   # Ce paramètre est désactivé par défaut. Si vous l'activez, le RAG n'utilisera que les articles dépassant un certain score de similarité.
   rerank:
     enabled: false
-    model: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+    model: mixedbread-ai/mxbai-rerank-large-v2
     top_n: 1
 
 summarize:
@@ -76,8 +76,8 @@ clickhouse:
     database: embeddings
 
 llamacpp:
-  llm_hf_repo_id: MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF
-  llm_hf_model_file: Mistral-7B-Instruct-v0.3.Q4_K_S.gguf
+  llm_hf_repo_id: MaziyarPanahi/Mistral-Small-Instruct-2409-GGUF
+  llm_hf_model_file: Mistral-Small-Instruct-2409.Q8_0.gguf
   tfs_z: 1.0            # Le tail free sampling réduit l'impact des tokens moins probables. Une valeur plus élevée (ex : 2.0) réduit davantage l'impact, 1.0 désactive ce réglage.
   top_k: 40             # Réduit la probabilité de générer des réponses incohérentes. Plus la valeur est élevée (ex : 100), plus les réponses sont diverses ; plus basse (ex : 10), plus elles sont conservatrices. (Défaut : 40)
   top_p: 1.0            # Fonctionne avec top-k. Plus la valeur est élevée (ex : 0.95), plus le texte est diversifié ; plus basse (ex : 0.5), plus il est focalisé et conservateur. (Défaut : 0.9)
@@ -90,7 +90,7 @@ embedding:
   embed_dim: 1024 # 1024 pour intfloat/multilingual-e5-large-instruct
 
 huggingface:
-  embedding_hf_model_name: intfloat/multilingual-e5-large-instruct
+  embedding_hf_model_name: BAAI/bge-multilingual-gemma2
   access_token: ${HF_TOKEN:}
   # Attention : activer cette option permet au modèle de télécharger et d'exécuter du code depuis Internet.
   # Nomic AI nécessite cette option pour fonctionner, soyez vigilant si vous utilisez un autre modèle.
