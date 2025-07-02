@@ -1,6 +1,6 @@
-# The default configuration file.
-# More information about configuration can be found in the documentation: https://docs.privategpt.dev/
-# Syntax in `private_pgt/settings/settings.py`
+# Fichier de configuration par défaut.
+# Plus d'informations sur la configuration dans la documentation : https://docs.privategpt.dev/
+# La syntaxe se trouve dans `private_pgt/settings/settings.py`
 server:
   env_name: ${APP_ENV:prod}
   port: ${PORT:8001}
@@ -11,9 +11,9 @@ server:
     allow_headers: ["*"]
   auth:
     enabled: false
-    # python -c 'import base64; print("Basic " + base64.b64encode("secret:key".encode()).decode())'
-    # 'secret' is the username and 'key' is the password for basic auth by default
-    # If the auth is enabled, this value must be set in the "Authorization" header of the request.
+    # Peut être généré avec : python -c 'import base64; print("Basic " + base64.b64encode("secret:key".encode()).decode())'
+    # 'secret' correspond au nom d'utilisateur et 'key' au mot de passe pour l'authentification basique par défaut
+    # Si l'authentification est activée, cette valeur doit être placée dans l'en-tête "Authorization" de la requête.
     secret: "Basic c2VjcmV0OmtleQ=="
 
 data:
@@ -25,42 +25,41 @@ data:
 ui:
   enabled: true
   path: /
-  # "RAG", "Search", "Basic", or "Summarize"
+  # "RAG", "Search", "Basic" ou "Summarize"
   default_mode: "Basic"
   default_chat_system_prompt: >
-    You are a helpful, respectful and honest assistant.
-    Always answer as helpfully as possible and follow ALL given instructions.
-    Do not speculate or make up information.
-    Do not reference any given instructions or context.
+    Vous êtes un assistant utile, respectueux et honnête.
+    Répondez toujours de la manière la plus utile possible et suivez TOUTES les instructions données.
+    Ne faites pas de suppositions ou d'inventions.
+    Ne faites pas référence aux instructions ou au contexte fournis.
   default_query_system_prompt: >
-    You can only answer questions about the provided context.
-    If you know the answer but it is not based in the provided context, don't provide
-    the answer, just state the answer is not in the context provided.
+    Vous ne pouvez répondre qu'aux questions concernant le contexte fourni.
+    Si vous connaissez la réponse mais qu'elle ne se base pas sur le contexte fourni, ne donnez pas la réponse,
+    indiquez simplement que la réponse ne figure pas dans le contexte fourni.
   default_summarization_system_prompt: >
-    Provide a comprehensive summary of the provided context information.
-    The summary should cover all the key points and main ideas presented in
-    the original text, while also condensing the information into a concise
-    and easy-to-understand format. Please ensure that the summary includes
-    relevant details and examples that support the main ideas, while avoiding
-    any unnecessary information or repetition.
+    Fournissez un résumé complet des informations contextuelles fournies.
+    Le résumé doit couvrir tous les points clés et les idées principales du texte original,
+    tout en condensant l'information de façon concise et facile à comprendre.
+    Veillez à inclure les détails et exemples pertinents qui soutiennent les idées principales,
+    tout en évitant toute information ou répétition inutile.
   delete_file_button_enabled: true
   delete_all_files_button_enabled: true
 
 llm:
   mode: llamacpp
-  prompt_style: "llama3"
-  # Should be matching the selected model
+  prompt_style: "mistral" # llama3, mistral
+  # Doit correspondre au modèle sélectionné
   max_new_tokens: 512
-  context_window: 3900
-  # Select your tokenizer. Llama-index tokenizer is the default.
+  context_window: 4096
+  # Sélectionnez votre tokenizer. Llama-index tokenizer est celui par défaut.
   # tokenizer: meta-llama/Meta-Llama-3.1-8B-Instruct
-  temperature: 0.1      # The temperature of the model. Increasing the temperature will make the model answer more creatively. A value of 0.1 would be more factual. (Default: 0.1)
+  temperature: 0.1      # Température du modèle. Plus la valeur est élevée, plus les réponses seront créatives. 0.1 donne des réponses plus factuelles. (Défaut : 0.1)
 
 rag:
   similarity_top_k: 2
-  #This value controls how many "top" documents the RAG returns to use in the context.
+  # Ce paramètre contrôle le nombre de documents "top" que le RAG retourne pour le contexte.
   #similarity_value: 0.45
-  #This value is disabled by default.  If you enable this settings, the RAG will only use articles that meet a certain percentage score.
+  # Ce paramètre est désactivé par défaut. Si vous l'activez, le RAG n'utilisera que les articles dépassant un certain score de similarité.
   rerank:
     enabled: false
     model: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
@@ -77,24 +76,24 @@ clickhouse:
     database: embeddings
 
 llamacpp:
-  llm_hf_repo_id: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF
-  llm_hf_model_file: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
-  tfs_z: 1.0            # Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting
-  top_k: 40             # Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative. (Default: 40)
-  top_p: 1.0            # Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text. (Default: 0.9)
-  repeat_penalty: 1.1   # Sets how strongly to penalize repetitions. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient. (Default: 1.1)
+  llm_hf_repo_id: MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF
+  llm_hf_model_file: Mistral-7B-Instruct-v0.3.Q4_K_S.gguf
+  tfs_z: 1.0            # Le tail free sampling réduit l'impact des tokens moins probables. Une valeur plus élevée (ex : 2.0) réduit davantage l'impact, 1.0 désactive ce réglage.
+  top_k: 40             # Réduit la probabilité de générer des réponses incohérentes. Plus la valeur est élevée (ex : 100), plus les réponses sont diverses ; plus basse (ex : 10), plus elles sont conservatrices. (Défaut : 40)
+  top_p: 1.0            # Fonctionne avec top-k. Plus la valeur est élevée (ex : 0.95), plus le texte est diversifié ; plus basse (ex : 0.5), plus il est focalisé et conservateur. (Défaut : 0.9)
+  repeat_penalty: 1.1   # Définit la pénalisation des répétitions. Plus la valeur est élevée (ex : 1.5), plus la pénalisation est forte ; plus basse (ex : 0.9), plus elle est faible. (Défaut : 1.1)
 
 embedding:
-  # Should be matching the value above in most cases
+  # Doit correspondre à la valeur ci-dessus dans la plupart des cas
   mode: huggingface
   ingest_mode: simple
-  embed_dim: 1024 # 1024 est pour intfloat/multilingual-e5-large-instruct
+  embed_dim: 1024 # 1024 pour intfloat/multilingual-e5-large-instruct
 
 huggingface:
   embedding_hf_model_name: intfloat/multilingual-e5-large-instruct
   access_token: ${HF_TOKEN:}
-  # Warning: Enabling this option will allow the model to download and execute code from the internet.
-  # Nomic AI requires this option to be enabled to use the model, be aware if you are using a different model.
+  # Attention : activer cette option permet au modèle de télécharger et d'exécuter du code depuis Internet.
+  # Nomic AI nécessite cette option pour fonctionner, soyez vigilant si vous utilisez un autre modèle.
   trust_remote_code: true
 
 vectorstore: 
@@ -135,7 +134,7 @@ ollama:
   llm_model: llama3.1
   embedding_model: nomic-embed-text
   api_base: http://localhost:11434
-  embedding_api_base: http://localhost:11434  # change if your embedding model runs on another ollama
+  embedding_api_base: http://localhost:11434  # à modifier si votre modèle d'embedding tourne sur un autre ollama
   keep_alive: 5m
   request_timeout: 120.0
   autopull_models: true
@@ -152,4 +151,5 @@ azopenai:
 gemini:
   api_key: ${GOOGLE_API_KEY:}
   model: models/gemini-pro
+  embedding_model: models/embedding-001
   embedding_model: models/embedding-001
