@@ -1,0 +1,1 @@
+$env:CMAKE_ARGS='-DGGML_CUDA=on'; poetry run pip install --force-reinstall --no-cache-dir llama-cpp-python numpy==1.26.0
