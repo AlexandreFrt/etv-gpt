@@ -49,7 +49,7 @@ llm:
   mode: llamacpp
   prompt_style: "mistral" # llama3, mistral
   # Doit correspondre au modèle sélectionné
-  max_new_tokens: 4096
+  max_new_tokens: 2048
   context_window: 4096
   # Sélectionnez votre tokenizer. Llama-index tokenizer est celui par défaut.
   # tokenizer: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -86,8 +86,16 @@ llamacpp:
 embedding:
   # Doit correspondre à la valeur ci-dessus dans la plupart des cas
   mode: huggingface
-  ingest_mode: simple
-  embed_dim: 1024 # 1024 pour intfloat/multilingual-e5-large-instruct
+
+  # simple : comportement historique, ingère un document à la fois, de manière séquentielle
+  
+  # batch : read, parse et embarque plusieurs documents en utilisant des lots (lecture en lot, puis parsing en lot, puis embedding en lot)
+  
+  # parallel : read, parse et embarque plusieurs documents en parallèle. C'est le mode d'ingestion le plus rapide pour une configuration locale.
+  
+  # pipeline : Alternative à parallel.
+  ingest_mode: parallel
+  embed_dim: 3584 # 1024 pour BAAI/bge-multilingual-gemma2
 
 huggingface:
   embedding_hf_model_name: BAAI/bge-multilingual-gemma2
