@@ -76,7 +76,7 @@ clickhouse:
     database: embeddings
 
 llamacpp:
-  llm_hf_repo_id: MaziyarPanahi/Mistral-Small-Instruct-2409-GGUF
+  llm_hf_repo_id: MaziyarPanahi/Mistral-Small-Instruct-2409-GGUF # none si vous utilisez un modèle local, sinon le nom du dépôt Hugging Face du modèle
   llm_hf_model_file: Mistral-Small-Instruct-2409.Q8_0.gguf
   tfs_z: 1.0            # Le tail free sampling réduit l'impact des tokens moins probables. Une valeur plus élevée (ex : 2.0) réduit davantage l'impact, 1.0 désactive ce réglage.
   top_k: 40             # Réduit la probabilité de générer des réponses incohérentes. Plus la valeur est élevée (ex : 100), plus les réponses sont diverses ; plus basse (ex : 10), plus elles sont conservatrices. (Défaut : 40)
