@@ -6,12 +6,15 @@ if command -v nvcc &> /dev/null; then
     CUDA_VERSION=$(nvcc --version | grep "release" | sed 's/.*release \([0-9.]*\).*/\1/')
     echo "CUDA $CUDA_VERSION est déjà installé"
     
-    # Vérifie si c'est la version 12.9 ou compatible
-    if [[ "$CUDA_VERSION" == 11.* ]] || [[ "$CUDA_VERSION" > "11.0" ]]; then
-        echo "Version CUDA compatible détectée. Installation de CUDA ignorée."
+    # Vérifie si c'est une version compatible (11.x ou 12.x)
+    MAJOR_VERSION=$(echo "$CUDA_VERSION" | cut -d. -f1)
+    MINOR_VERSION=$(echo "$CUDA_VERSION" | cut -d. -f2)
+    
+    if [[ "$MAJOR_VERSION" == "11" ]] || [[ "$MAJOR_VERSION" == "12" ]]; then
+        echo "Version CUDA $CUDA_VERSION compatible détectée. Installation de CUDA ignorée."
         CUDA_ALREADY_INSTALLED=true
     else
-        echo "Version CUDA $CUDA_VERSION détectée, mais version 12.9+ requise. Mise à jour..."
+        echo "Version CUDA $CUDA_VERSION détectée, mais version 11.x ou 12.x requise. Mise à jour..."
         CUDA_ALREADY_INSTALLED=false
     fi
 else

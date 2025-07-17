@@ -35,11 +35,13 @@ fi
 
 # Vérifie si pyenv n'est pas déjà configuré dans le profil
 if ! grep -q "PYENV_ROOT" "$PROFILE_FILE"; then
-    echo "" >> "$PROFILE_FILE"
-    echo "# Configuration pyenv" >> "$PROFILE_FILE"
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> "$PROFILE_FILE"
-    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> "$PROFILE_FILE"
-    echo 'eval "$(pyenv init -)"' >> "$PROFILE_FILE"
+    {
+        echo ""
+        echo "# Configuration pyenv"
+        echo 'export PYENV_ROOT="$HOME/.pyenv"'
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'
+        echo 'eval "$(pyenv init -)"'
+    } >> "$PROFILE_FILE"
     echo "Configuration pyenv ajoutée à $PROFILE_FILE"
 fi
 
