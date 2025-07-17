@@ -8,7 +8,6 @@ if command -v nvcc &> /dev/null; then
     
     # Vérifie si c'est une version compatible (11.x ou 12.x)
     MAJOR_VERSION=$(echo "$CUDA_VERSION" | cut -d. -f1)
-    MINOR_VERSION=$(echo "$CUDA_VERSION" | cut -d. -f2)
     
     if [[ "$MAJOR_VERSION" == "11" ]] || [[ "$MAJOR_VERSION" == "12" ]]; then
         echo "Version CUDA $CUDA_VERSION compatible détectée. Installation de CUDA ignorée."
