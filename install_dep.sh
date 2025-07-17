@@ -35,6 +35,9 @@ fi
 
 # Vérifie si pyenv n'est pas déjà configuré dans le profil
 if ! grep -q "PYENV_ROOT" "$PROFILE_FILE"; then
+    # Note: Utilisation de guillemets simples intentionnelle pour éviter l'expansion des variables
+    # Les variables doivent être évaluées lors de l'exécution du profil, pas maintenant
+    # shellcheck disable=SC2016
     {
         echo ""
         echo "# Configuration pyenv"
@@ -58,6 +61,7 @@ if ! command -v poetry &> /dev/null; then
     
     # Ajoute Poetry au fichier de profil s'il n'y est pas déjà
     if ! grep -q "/.local/bin" "$PROFILE_FILE"; then
+        # shellcheck disable=SC2016
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$PROFILE_FILE"
         echo "Poetry ajouté au PATH dans $PROFILE_FILE"
     fi
