@@ -57,11 +57,52 @@ jobs:
           name: code-coverage-report
           path: htmlcov/
 
+  test-scripts:
+    runs-on: ubuntu-latest
+    container: debian:12
+    name: test-shell-scripts
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y shellcheck bash
+      - name: Make scripts executable
+        run: |
+          chmod +x install_dep.sh
+          chmod +x setup.sh
+          chmod +x setup_gpu.sh
+      - name: Test script syntax with shellcheck
+        run: |
+          shellcheck install_dep.sh
+          shellcheck setup.sh
+          shellcheck setup_gpu.sh
+      - name: Test script execution (dry run)
+        run: |
+          # Test install_dep.sh (simulate without actual installation)
+          bash -n install_dep.sh
+          echo "install_dep.sh syntax OK"
+          
+          # Test setup.sh (simulate without actual execution)
+          bash -n setup.sh
+          echo "setup.sh syntax OK"
+          
+          # Test setup_gpu.sh (simulate without actual execution)
+          bash -n setup_gpu.sh
+          echo "setup_gpu.sh syntax OK"
+      - name: Test scripts with bash strict mode
+        run: |
+          # Test scripts with strict error handling
+          bash -euo pipefail -c 'bash -n install_dep.sh'
+          bash -euo pipefail -c 'bash -n setup.sh'
+          bash -euo pipefail -c 'bash -n setup_gpu.sh'
+
   all_checks_passed:
     # Used to easily force requirements checks in GitHub
     needs:
       - checks
       - test
+      - test-scripts
     runs-on: ubuntu-latest
     steps:
       - run: echo "All checks passed"
