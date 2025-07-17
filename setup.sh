@@ -7,10 +7,10 @@ pyenv install 3.11
 pyenv local 3.11
 
 # Demande à l'utilisateur s'il souhaite saisir son token Hugging Face
-read -p "Voulez-vous ajouter votre token Hugging Face maintenant ? (o/N): " add_hf_token
+read -rp "Voulez-vous ajouter votre token Hugging Face maintenant ? (o/N): " add_hf_token
 if [[ "$add_hf_token" == "o" || "$add_hf_token" == "O" ]]; then
     huggingface-cli login
-    read -p "Entrez votre token Hugging Face: " hf_token
+    read -rp "Entrez votre token Hugging Face: " hf_token
     export HF_TOKEN="$hf_token"
 fi
 
