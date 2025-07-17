@@ -98,7 +98,7 @@ La configuration du projet se trouve dans le fichier `settings.yaml`. Voici les 
 > poetry run python scripts/setup
 > ```
 
-## 🔧 Gestion des modèles
+## Gestion des modèles
 
 ### Utiliser un modèle local existant
 Si vous avez déjà un modèle téléchargé localement, modifiez `settings.yaml` :
