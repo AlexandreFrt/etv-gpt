@@ -6,13 +6,15 @@ La documentation complète de private-gpt est disponible sur ce [lien](https://d
 
 ## Pré-requis
 
-- **Windows 10/11** : Ce projet est conçu pour fonctionner sur Windows
+- **Windows 10/11 ou Debian** : Ce projet est conçu pour fonctionner sur Windows et Debian
 - **Python 3.10+** : Assurez-vous d'avoir Python installé
 - **Hugging Face Token** (optionnel) : Nécessaire uniquement si vous devez télécharger des modèles depuis Hugging Face. Si les modèles sont déjà téléchargés localement, ce token n'est pas requis. Vous pouvez en obtenir un [ici](https://huggingface.co/settings/tokens)
 
 ## Installation
 
 ### 1. Installation des dépendances
+
+#### Sur Windows
 Exécutez les scripts suivants dans cet ordre depuis PowerShell :
 
 ```powershell
@@ -26,10 +28,28 @@ Exécutez les scripts suivants dans cet ordre depuis PowerShell :
 .\setup_gpu.ps1
 ```
 
+#### Sur Linux (Debian/Ubuntu)
+Exécutez les scripts suivants dans cet ordre depuis le terminal :
+
+```bash
+# 1. Installer les dépendances système (pyenv, poetry, make, etc.)
+chmod +x install_dep.sh
+./install_dep.sh
+
+# 2. Configurer le projet (Python, HuggingFace, dépendances)
+chmod +x setup.sh
+./setup.sh
+
+# 3. (Optionnel) Activer le support GPU pour llama-cpp
+chmod +x setup_gpu.sh
+./setup_gpu.sh
+```
+
 ### 2. Configuration initiale
 Après l'installation, configurez votre token Hugging Face si nécessaire :
 
-```batch
+**Sur Windows :**
+```bash
 huggingface-cli login
 ```
 
@@ -67,8 +87,15 @@ La configuration du projet se trouve dans le fichier `settings.yaml`. Voici les 
 
 > [!IMPORTANT]
 > À chaque modification du fichier `settings.yaml`, exécutez :
+> 
+> **Sur Windows :**
 > ```batch
 > poetry run python scripts\setup
+> ```
+> 
+> **Sur Linux :**
+> ```bash
+> poetry run python scripts/setup
 > ```
 
 ## 🔧 Gestion des modèles
@@ -100,8 +127,15 @@ Si vous souhaitez télécharger un modèle depuis Hugging Face, suivez ces étap
 
 Pour démarrer le projet :
 
+**Sur Windows :**
 ```batch
 .\start.bat
+```
+
+**Sur Linux :**
+```bash
+chmod +x start.sh
+./start.sh
 ```
 
 ### Accès à l'interface
