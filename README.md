@@ -49,10 +49,49 @@ chmod +x setup_gpu.sh
 ### 2. Configuration initiale
 Après l'installation, configurez votre token Hugging Face si nécessaire :
 
-**Sur Windows :**
-```bash
+
+**1. Configurez votre token Hugging Face (si besoin)**
+
+Sur Windows ou Linux :
+```batch
 huggingface-cli login
 ```
+
+**2. Vérifiez l’activation du GPU**
+
+Lancez le programme :
+Sur Windows :
+```powershell
+.\start.ps1
+```
+Sur Linux :
+```bash
+./start.sh
+```
+
+Si le GPU est bien utilisé, vous verrez des messages comme :
+```
+ggml_cuda_init: found 1 CUDA devices:
+  Device 0: NVIDIA GeForce RTX 4090, compute capability 8.9, VMM: yes
+llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce RTX 4090) - 22994 MiB free
+```
+Et
+```
+load_tensors: layer   0 assigned to device CUDA0, is_swa = 0
+...
+load_tensors: offloading 56 repeating layers to GPU
+load_tensors: offloading output layer to GPU
+load_tensors: offloaded 57/57 layers to GPU
+load_tensors:        CUDA0 model buffer size = 22340.65 MiB
+```
+
+Si le paramètre `BLAS` est à 0, cela signifie que l’accélération GPU n’est pas active :
+```
+llama_new_context_with_model: total VRAM used: 4857.93 MB (model: 4095.05 MB, context: 762.87 MB)
+AVX = 1 | AVX2 = 1 | AVX512 = 0 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | FMA = 1 | NEON = 0 | ARM_FMA = 0 | F16C = 1 | FP16_VA = 0 | WASM_SIMD = 0 | BLAS = 0 | SSE3 = 1 | SSSE3 = 0 | VSX = 0 |
+```
+
+Il est possible que le paramètre `BLAS` ne soit pas affiché lorsque l'accélération GPU est activée.
 
 ## Configuration
 
